@@ -1,9 +1,9 @@
-import { View, Text, ActivityIndicator } from "react-native";
-import React, { useEffect } from "react";
-import { useAuthStore } from "@/presentation/auth/store/useAuthStore";
-import { Redirect, router, Stack } from "expo-router";
-import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 import LogoutIconButton from "@/presentation/auth/components/LogoutIconButton";
+import { useAuthStore } from "@/presentation/auth/store/useAuthStore";
+import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
+import { Redirect, Stack } from "expo-router";
+import React, { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
 
 const CheckAuthenticationLayout = () => {
   const { status, checkStatus } = useAuthStore();

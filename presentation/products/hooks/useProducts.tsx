@@ -7,6 +7,7 @@ export const useProducts = () => {
     queryFn: ({ pageParam }) => getProducts(20, pageParam * 20),
 
     staleTime: 1000 * 60 * 60, // 1 hora
+
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => allPages.length,
   });
@@ -14,7 +15,7 @@ export const useProducts = () => {
   return {
     productsQuery,
 
-    //Methods
+    // Methods
     loadNextPage: productsQuery.fetchNextPage,
   };
 };
