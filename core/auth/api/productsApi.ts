@@ -1,3 +1,4 @@
+import { SecureStorageAdapter } from "@/helpers/adapters/secure-storage.adapter";
 import axios from "axios";
 import { Platform } from "react-native";
 
@@ -10,10 +11,20 @@ export const API_URL =
     ? process.env.EXPO_PUBLIC_API_URL_IOS
     : process.env.EXPO_PUBLIC_API_URL_ANDROID;
 
-console.log({ STAGE, [Platform.OS]: API_URL });
-
 const productsApi = axios.create({
   baseURL: API_URL,
+});
+
+// Seria como un middleware
+productsApi.interceptors.request.use(async (config) => {
+  //Verificar si tenemos un token en el secure storage
+  const token = await SecureStorageAdapter.getITem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
 });
 
 export { productsApi };
