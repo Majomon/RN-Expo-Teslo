@@ -2,9 +2,11 @@ import { View, Text, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import { useAuthStore } from "@/presentation/auth/store/useAuthStore";
 import { Redirect, router, Stack } from "expo-router";
+import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 
 const CheckAuthenticationLayout = () => {
   const { status, checkStatus } = useAuthStore();
+  const backgroundColor = useThemeColor({}, "background");
 
   useEffect(() => {
     checkStatus();
@@ -31,7 +33,17 @@ const CheckAuthenticationLayout = () => {
   }
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: backgroundColor,
+        },
+        contentStyle: {
+          backgroundColor: backgroundColor,
+        },
+      }}
+    >
       <Stack.Screen
         name="(home)/index"
         options={{
