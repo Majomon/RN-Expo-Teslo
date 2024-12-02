@@ -9,6 +9,8 @@ import {
 import React from "react";
 import { ThemedText } from "@/presentation/theme/components/ThemedText";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
+import ThemedButton from "@/presentation/theme/components/ThemedButton";
+import ThemedLink from "@/presentation/theme/components/ThemedLink";
 
 const LoginScreen = () => {
   const { height } = useWindowDimensions();
@@ -40,6 +42,29 @@ const LoginScreen = () => {
             secureTextEntry
             icon="lock-closed-outline"
           />
+        </View>
+
+        {/* Spacer */}
+        <View style={{ marginTop: 10 }} />
+
+        {/* Botón */}
+        <ThemedButton icon="arrow-forward-outline">Ingresar</ThemedButton>
+
+        {/* Spacer */}
+        <View style={{ marginTop: 40 }} />
+
+        {/* Enlace a registro */}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ThemedText>¿No tienes cuenta?</ThemedText>
+          <ThemedLink href="/auth/register" style={{ marginHorizontal: 5 }}>
+            Crear cuenta
+          </ThemedLink>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
