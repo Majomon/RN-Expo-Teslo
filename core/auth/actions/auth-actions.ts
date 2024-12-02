@@ -37,7 +37,8 @@ export const authLogin = async (email: string, password: string) => {
     return returnUserToken(data);
   } catch (error) {
     console.log(error);
-    throw new Error("Usuario y/o password inválido");
+    // throw new Error("Usuario y/o password inválido");
+    return null;
   }
 };
 
