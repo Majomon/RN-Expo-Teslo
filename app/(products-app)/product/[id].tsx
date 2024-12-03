@@ -1,5 +1,6 @@
 import { ProductImages } from "@/presentation/products/components/ProductImages";
 import { useProduct } from "@/presentation/products/hooks/useProduct";
+import ThemedButton from "@/presentation/theme/components/ThemedButton";
 import { ThemedButtonGroup } from "@/presentation/theme/components/ThemedButtonGroup";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import { ThemedView } from "@/presentation/theme/components/ThemedView";
@@ -80,7 +81,22 @@ const ProductScreen = () => {
             selectOptions={product.sizes}
             onSelect={(options) => console.log(options)}
           />
+          <ThemedButtonGroup
+            options={["kid", "men", "women", "unisex"]}
+            selectOptions={[product.gender]}
+            onSelect={(options) => console.log(options)}
+          />
         </ThemedView>
+
+        {/* Boton para guardar */}
+        <View style={{ marginHorizontal: 10, marginBottom: 50, marginTop: 20 }}>
+          <ThemedButton
+            icon="save-outline"
+            onPress={() => console.log("Guardar")}
+          >
+            Guardar
+          </ThemedButton>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );

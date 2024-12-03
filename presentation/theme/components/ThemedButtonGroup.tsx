@@ -34,7 +34,7 @@ export const ThemedButtonGroup = ({
               selectOptions.includes(option) && styles.selectButtonText,
             ]}
           >
-            {option}
+            {option[0].toUpperCase()+option.slice(1)}
           </Text>
         </TouchableOpacity>
       ))}
