@@ -6,8 +6,6 @@ export const updateCreateProduct = (product: Partial<Product>) => {
   product.price = isNaN(Number(product.price)) ? 0 : Number(product.price);
 
   if (product.id && product.id !== "new") {
-    console.log("Entro al update");
-    
     return updateProduct(product);
   }
 
