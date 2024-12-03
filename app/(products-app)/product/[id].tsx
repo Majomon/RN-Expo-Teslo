@@ -1,5 +1,6 @@
 import { ProductImages } from "@/presentation/products/components/ProductImages";
 import { useProduct } from "@/presentation/products/hooks/useProduct";
+import { ThemedButtonGroup } from "@/presentation/theme/components/ThemedButtonGroup";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import { ThemedView } from "@/presentation/theme/components/ThemedView";
 import { Ionicons } from "@expo/vector-icons";
@@ -72,6 +73,13 @@ const ProductScreen = () => {
         >
           <ThemedTextInput style={{ flex: 1 }} placeholder="Precio" />
           <ThemedTextInput style={{ flex: 1 }} placeholder="Inventario" />
+        </ThemedView>
+        <ThemedView style={{ marginHorizontal: 10 }}>
+          <ThemedButtonGroup
+            options={["XS", "S", "M", "L", "XL", "XXL", "XXXL"]}
+            selectOptions={product.sizes}
+            onSelect={(options) => console.log(options)}
+          />
         </ThemedView>
       </ScrollView>
     </KeyboardAvoidingView>
