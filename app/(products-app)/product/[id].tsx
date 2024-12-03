@@ -20,7 +20,7 @@ import {
 const ProductScreen = () => {
   const { id } = useLocalSearchParams();
   const navigation = useNavigation();
-  const { productQuery } = useProduct(`${id}`);
+  const { productQuery, productMutation } = useProduct(`${id}`);
 
   useEffect(() => {
     navigation.setOptions({
@@ -53,7 +53,7 @@ const ProductScreen = () => {
   return (
     <Formik
       initialValues={product}
-      onSubmit={(productLike) => console.log(productLike)}
+      onSubmit={(productLike) => productMutation.mutate(productLike)}
     >
       {({ values, handleSubmit, handleChange, setFieldValue }) => (
         <KeyboardAvoidingView
@@ -114,7 +114,7 @@ const ProductScreen = () => {
                   )
                     ? values.sizes.filter((s) => s !== selectedSize)
                     : [...values.sizes, selectedSize];
-                    
+
                   setFieldValue("sizes", newSizeValue);
                 }}
               />
@@ -131,10 +131,7 @@ const ProductScreen = () => {
             <View
               style={{ marginHorizontal: 10, marginBottom: 50, marginTop: 20 }}
             >
-              <ThemedButton
-                icon="save-outline"
-                onPress={() => console.log("Guardar")}
-              >
+              <ThemedButton icon="save-outline" onPress={() => handleSubmit()}>
                 Guardar
               </ThemedButton>
             </View>
