@@ -1,7 +1,22 @@
 import { API_URL, productsApi } from "@/core/api/productsApi";
-import { Product } from "../interfaces/product.interface";
+import { Gender, Product } from "../interfaces/product.interface";
+
+const emptyProduct: Product = {
+  id: "",
+  title: "Nuevo producto",
+  description: "",
+  price: 0,
+  images: [],
+  slug: "",
+  gender: Gender.Men,
+  sizes: [],
+  stock: 0,
+  tags: [],
+};
 
 export const getProductById = async (id: string) => {
+  if (id === "new") return emptyProduct;
+  
   try {
     const { data } = await productsApi.get<Product>(`/products/${id}`);
 
