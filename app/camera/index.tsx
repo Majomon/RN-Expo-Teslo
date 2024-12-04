@@ -5,6 +5,7 @@ import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
 import {
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,6 +16,7 @@ import {
 const CameraScreen = () => {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
+  const [selectedImage, setSelectedImage] = useState<string>();
 
   const cameraRef = useRef<CameraView>(null);
 
@@ -55,6 +57,7 @@ const CameraScreen = () => {
 
     if (!picture?.uri) return;
 
+    setSelectedImage(picture.uri);
     //TODO Guardar imagen
   };
 
@@ -62,9 +65,26 @@ const CameraScreen = () => {
     router.dismiss();
   };
 
+  const onPictureAccepted = () => {};
+
+  const onRetakePhoto = () => {
+    setSelectedImage(undefined);
+  };
+
   const toggleCameraFacing = () => {
     setFacing((current) => (current === "back" ? "front" : "back"));
   };
+
+  if (selectedImage) {
+    return (
+      <View style={styles.container}>
+        <Image source={{ uri: selectedImage }} style={styles.camera} />
+        <ConfirmImageButton onPress={onPictureAccepted} />
+        <RetakeImageButton onPress={onRetakePhoto} />
+        <ReturnCancelButton onPress={onReturnCancel} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -124,6 +144,36 @@ const ReturnCancelButton = ({ onPress = () => {} }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.returnCancelButton}>
       <Ionicons name="arrow-back-outline" size={30} color="white" />
+    </TouchableOpacity>
+  );
+};
+
+const ConfirmImageButton = ({ onPress = () => {} }) => {
+  const dimensiones = useWindowDimensions();
+  const primaryColor = useThemeColor({}, "primary");
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.shutterButton,
+        {
+          position: "absolute",
+          bottom: 32,
+          left: dimensiones.width / 2 - 32,
+          borderColor: primaryColor,
+        },
+      ]}
+    >
+      <Ionicons name="checkmark-outline" size={30} color={primaryColor} />
+    </TouchableOpacity>
+  );
+};
+
+const RetakeImageButton = ({ onPress = () => {} }) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.flipCameraButton}>
+      <Ionicons name="close-outline" size={30} color="white" />
     </TouchableOpacity>
   );
 };
