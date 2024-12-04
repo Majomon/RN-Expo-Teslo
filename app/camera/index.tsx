@@ -1,9 +1,10 @@
 import { ThemedText } from "@/presentation/theme/components/ThemedText";
 import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import { Ionicons } from "@expo/vector-icons";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
+import { router } from "expo-router";
 import { useRef, useState } from "react";
 import {
-  Button,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -57,6 +58,10 @@ const CameraScreen = () => {
     //TODO Guardar imagen
   };
 
+  const onReturnCancel = () => {
+    router.dismiss();
+  };
+
   const toggleCameraFacing = () => {
     setFacing((current) => (current === "back" ? "front" : "back"));
   };
@@ -65,6 +70,9 @@ const CameraScreen = () => {
     <View style={styles.container}>
       <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
         <ShutterButton onPress={onShutterButtonPress} />
+        <FlipCameraButton onPress={toggleCameraFacing} />
+        <GaleryButton />
+        <ReturnCancelButton onPress={onReturnCancel} />
         {/*  <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity> */}
@@ -95,6 +103,30 @@ const ShutterButton = ({ onPress = () => {} }) => {
 };
 
 export default CameraScreen;
+
+const FlipCameraButton = ({ onPress = () => {} }) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.flipCameraButton}>
+      <Ionicons name="camera-reverse-outline" size={30} color="white" />
+    </TouchableOpacity>
+  );
+};
+
+const GaleryButton = ({ onPress = () => {} }) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.galleryButton}>
+      <Ionicons name="images-outline" size={30} color="white" />
+    </TouchableOpacity>
+  );
+};
+
+const ReturnCancelButton = ({ onPress = () => {} }) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.returnCancelButton}>
+      <Ionicons name="arrow-back-outline" size={30} color="white" />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
