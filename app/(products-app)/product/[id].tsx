@@ -24,7 +24,7 @@ import {
 } from "react-native";
 
 const ProductScreen = () => {
-  const { selectedImage, clearImages } = useCameraStore();
+  const { selectedImages, clearImages } = useCameraStore();
   const { id } = useLocalSearchParams();
   const navigation = useNavigation();
   const { productQuery, productMutation } = useProduct(`${id}`);
@@ -71,14 +71,19 @@ const ProductScreen = () => {
   return (
     <Formik
       initialValues={product}
-      onSubmit={(productLike) => productMutation.mutate(productLike)}
+      onSubmit={(productLike) =>
+        productMutation.mutate({
+          ...productLike,
+          images: [...productLike.images, ...selectedImages],
+        })
+      }
     >
       {({ values, handleSubmit, handleChange, setFieldValue }) => (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
           <ScrollView>
-            <ProductImages images={[...product.images, ...selectedImage]} />
+            <ProductImages images={[...product.images, ...selectedImages]} />
             <ThemedView style={{ marginHorizontal: 10 }}>
               <ThemedTextInput
                 style={{ marginVertical: 5 }}
