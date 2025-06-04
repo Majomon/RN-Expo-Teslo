@@ -25,9 +25,9 @@ import {
 } from "react-native";
 
 const ProductScreen = () => {
-  const { selectedImages, clearImages } = useCameraStore();
   const { id } = useLocalSearchParams();
   const navigation = useNavigation();
+  const { selectedImages, clearImages } = useCameraStore();
   const { productQuery, productMutation } = useProduct(`${id}`);
 
   useEffect(() => {
